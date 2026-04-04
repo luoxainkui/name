@@ -39,7 +39,8 @@ class Students:
             return True
         return False
 
-    def show_
+    def show_stu(self):
+        
 
 
 
