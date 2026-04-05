@@ -4,8 +4,8 @@ import os
 BASE_DTR = os.path.dirname(os.path.abspath(__file__))
 STU_DTR = os.path.join(BASE_DTR,"..","data")
 os.makedirs(STU_DTR,exist_ok = True)
-STU_PATH = os.path.join(STU_DTR,"students.json")
-STU_PATH = os.path.normpath(STU_PATH)
+STU_PATH = os.path.normpath(os.path.join(STU_DTR,"students.json"))
+
 class Students:
     def __init__(self) ->None:
         self.students = []
@@ -22,11 +22,12 @@ class Students:
             print("students.json")
             self.students = []
             self.save_students()
+
     def save_students(self) ->None:
         with open(STU_PATH,"w",encoding="utf-8") as i:
             json.dump(self.students,i,ensure_ascii=False,indent=4)
 
-    def int_students(self,it) ->int|None:
+    def int_students(self,it:any) ->int|None:
         try:
             return int(it)
         except:
@@ -81,7 +82,8 @@ class Students:
             print("找不到该学生的id!")
         self.students = nwo_list
         self.save_students()
-        print("已删除该学生的所有信息")      
+        print("已删除该学生的所有信息") 
+
     def get_students(self)->None:
         """修改学生"""
         stu_id = input("请输入修改的学生编号id:").strip()
@@ -106,6 +108,7 @@ class Students:
                 stu[key] = value
         self.save_students()
         print("修改成功～")
+
     def query_students(self)->None:
         """查询学生"""
         query = input("请输入需要在查询的学生编号id:").strip()
@@ -115,6 +118,7 @@ class Students:
             print(f"学生编号id:{stu['id']}|姓名:{stu['name']}|班级:{stu['cls']}|年龄:{stu['age']}|性别:{stu['gender']}")
             return
         print("没有找到学生id")
+
     def show_students(self) ->None:
         """展示学生"""
         if not self.students:
@@ -122,7 +126,8 @@ class Students:
             return
         for show in self.students:
             print(f"学生编号id:{show['id']}|姓名:{show['name']}|班级:{show['cls']}|年龄:{show['age']}|性别:{show['gender']}")
-    def student_interface(self):
+            
+    def student_interface(self) ->None:
         while True:
             self.system_students()
             Interface = input("请输入：")
@@ -142,9 +147,4 @@ class Students:
             else:
                 print("错误无效字符！！！")
 
-
-
-if __name__== "__main__":
-    run = Students()
-    run.student_interface()
 

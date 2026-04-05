@@ -6,10 +6,12 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # 退一步查找data文件
 ROOT_DTR = os.path.join(BASE_DIR,"..","data")
+# 检验是不是空文件
 os.makedirs(ROOT_DTR,exist_ok = True)
-BOOK_PATH = os.path.join(ROOT_DTR, "books.json")
 # ===========路径========= 
-BOOK_PATH = os.path.normpath(BOOK_PATH)
+BOOK_PATH = os.path.normpath(os.path.join(ROOT_DTR,"books.json"))
+
+
 class LibrarySystem:
     def __init__(self) ->None:
         self.books = []
@@ -17,7 +19,9 @@ class LibrarySystem:
 # ===========图书信息储存=========    
     def obtain_books(self) ->None:
         if not os.path.exists(BOOK_PATH):
+            print("书籍文件不存在，已经创建为空文件!")
             self.books = []
+            self.save_books()
             return
         try:
             with open(BOOK_PATH,"r",encoding="utf-8") as i:
@@ -120,8 +124,9 @@ class LibrarySystem:
         if not self.books:
             print("没有图书！")
             return None
-        for show in self.books:
-            print(f"id:{show['book_id']}|图书:{show['book_name']}|作者：{show['author']}|日期：{show['publish_date']}|时间：{show['borrow_time']}")
+        for index,show in enumerate(self.books,1):
+            print(f"序号:{index:2d}|id:{show['book_id']:<6s}|图书:{show['book_name']:<8s}|作者：{show['author']:<8s}|日期：{show['publish_date']:<6s}|时间：{show['borrow_time']}")
+        print("="*70 + "\n")
     def run(self) ->None:
         """接口"""
         while True:
@@ -142,8 +147,4 @@ class LibrarySystem:
                 break
             else:
                 print("请重新输入")
-
-if __name__ =="__main__":
-    runr = LibrarySystem()
-    runr.run()
 

@@ -1,7 +1,7 @@
 # *****************学生视角********************
 import json 
 import os
-from datetime import datetime
+from datetime import datetime as dt
 
 class JsonData:
     @staticmethod
@@ -12,12 +12,12 @@ class JsonData:
         if not os.path.exists(file_path):
             return []
         #找到文件后读取返回成字典
-        with open(file_path,"r",encoding="utf=8") as f:
+        with open(file_path,"r",encoding="utf-8") as f:
             return json.load(f)
     @staticmethod
     def write(file:str,data:list[dict[str,any]]) ->None:
         file_path = os.path.join("..","data",file)
-        with open(file_path,"w",encoding="utf=8") as f:
+        with open(file_path,"w",encoding="utf-8") as f:
             json.dump(data,f,ensure_ascii=False,indent=4)
 
 # ==============学生查阅============
@@ -38,9 +38,18 @@ class Students:
             self.stu = stu
             return True
         return False
+    def shwo_stu(self) ->None:
+        """展示图书"""
+        book = JsonData.read(self.books_file)
+        for b in book:
+            print(f"图书编号id:{b['book_id']}|图书:{b['book_name']}|作者：{b['author']}|日期：{b['publish_date']}|时间：{b['borrow_time']}") 
+    
+    def borrow_stu(self):
+        """借阅图书"""
 
-    def show_stu(self):
-        
+
+
+
 
 
 
