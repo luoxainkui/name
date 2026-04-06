@@ -126,7 +126,18 @@ class Students:
             return
         for show in self.students:
             print(f"学生编号id:{show['id']}|姓名:{show['name']}|班级:{show['cls']}|年龄:{show['age']}|性别:{show['gender']}")
-            
+
+    def check_student(self,stu_id) ->bool:
+        """校验学生是否存在"""
+        return any(s['id'] == stu_id for s in self.students)
+    
+    def student_name(self,stu_id) ->str:
+        """获取学生名字"""
+        for stu in self.students:
+            if stu['id'] == stu_id:
+                return stu['name']
+        return ['未知学生']
+
     def student_interface(self) ->None:
         while True:
             self.system_students()

@@ -65,7 +65,8 @@ class LibrarySystem:
             "book_name" : book,
             "author" : author,
             "publish_date" :publish_date,
-            "borrow_time" :borrow_time
+            "borrow_time" :borrow_time,
+            "status" : "可借"
         }
         self.books.append(nooks_books)
         self.save_books()
@@ -127,6 +128,37 @@ class LibrarySystem:
         for index,show in enumerate(self.books,1):
             print(f"序号:{index:2d}|id:{show['book_id']:<6s}|图书:{show['book_name']:<8s}|作者：{show['author']:<8s}|日期：{show['publish_date']:<6s}|时间：{show['borrow_time']}")
         print("="*70 + "\n")
+    def status_books(self,books_id) ->str:
+        """借阅图书"""
+        for b in self.books:
+            if b['book_id'] == books_id:
+                return b['status']
+        return "未知图书"
+    def is_borrow_books(self,books_id:any) ->bool:
+        """判断是否可借"""
+        for b in self.books:
+            if b['book_id'] == books_id:
+                return b['status'] == "可借"
+        return False
+    def borrow_book(self,books_id) ->bool:
+        for b in self.books:
+            if b['book_id'] == books_id:
+                if b['status'] == "可借":
+                    b['status'] == "已借出"
+                    self.save_books()
+                    return True
+                else:
+                    return False
+        return False
+    def return_books(self,books_id:any) ->bool:
+        """还书"""
+        for b in self.books:
+            if b['book_id'] == books_id:
+                b['status'] = "可借"
+                self.save_books()
+                return True
+        return False
+        
     def run(self) ->None:
         """接口"""
         while True:

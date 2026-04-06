@@ -33,11 +33,12 @@ class Logs:
 
 #============添加借书日志==========
     def add_logs(self,student_id:any,books_id:any,books_name:any) ->None:
+        """id=学号,books_id=书编号,books_name=书名"""
         now =  dt.now().strftime("%Y-%m-%d %H:%M:%S")
         sog = {
-            "student_id": student_id,
-            "books_id": books_id,
-            "books_name": books_name,
+            "id": student_id,
+            "book_id": books_id,
+            "book_name": books_name,
             "status": "已借出",
             "books_time": now,
             "return_time": "" 
@@ -49,7 +50,7 @@ class Logs:
     def return_logs(self,student_id:any,books_id:any,books_name:any) ->None:
         now_id = dt.now().strftime("%Y-%m-%d %H:%M:%S")
         for n in self.log:
-            if n["student_id"] == student_id and n["books_id"] == books_id and n["books_name"] == books_name and n["status"] == "已借出":
+            if n["id"] == student_id and n["book_id"] == books_id and n["book_name"] == books_name and n["status"] == "已借出":
                 n["status"] = "已归还"
                 n["return_time"] = now_id
                 break
@@ -61,21 +62,21 @@ class Logs:
             return
         for index,log in enumerate(self.log,1):
             print(f"序号:{index}")
-            print(f"学生序号:{log['student_id']}")
-            print(f"图书序号:{log['books_id']}|书名:{log['books_name']}")
+            print(f"学生序号:{log['id']}")
+            print(f"图书序号:{log['book_id']}|书名:{log['book_name']}")
             print(f"状态:{log['status']}")
             print(f"借书时间:{log['books_time']}")
             print(f"归还时间:{log['return_time']}")
             print("#"*50)
 # ============按学号查日志===========
     def query_logs(self,student_id):
-        query = [q for q in self.log if q['student_id'] == student_id]
+        query = [q for q in self.log if q['id'] == student_id]
         if not query:
             print(f"没有找到学生{student_id}借阅记录")
             return
         print(f"学生{student_id}的借阅记录")
         for r in query:
-            print(f"图书:{r['books_id']}|书名:{r['books_name']}")
+            print(f"图书:{r['book_id']}|书名:{r['book_name']}")
             print(f"借书时间:{r['books_time']}")
             print(f"归还时间:{r['return_time']}")
             print("*"*50)
