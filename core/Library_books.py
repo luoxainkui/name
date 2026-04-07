@@ -81,6 +81,7 @@ class LibrarySystem:
         nwo_list = [b for b in self.books if b['book_id'] != book_id]
         if len(nwo_list) == len(self.books):
             print("找不到该图书id")
+            return
         self.books = nwo_list
         self.save_books()
         print("删除成功～")
@@ -144,7 +145,7 @@ class LibrarySystem:
         for b in self.books:
             if b['book_id'] == books_id:
                 if b['status'] == "可借":
-                    b['status'] == "已借出"
+                    b['status'] = "已借出"
                     self.save_books()
                     return True
                 else:
@@ -158,7 +159,12 @@ class LibrarySystem:
                 self.save_books()
                 return True
         return False
-        
+    def get_books_name(self,books_id:str) ->str:
+        """获取图书名字"""
+        for b in self.books:
+            if b['book_id'] == books_id:
+                return b['book_name']
+        return '未知图书'
     def run(self) ->None:
         """接口"""
         while True:

@@ -58,16 +58,17 @@ class LibraryManager:
             elif stu == '1':
                 book_id = input("请输入需要借的图书编号:").strip()
                 """获取"""
-                book_name = self.book.status_books(book_id)
+                book_name = self.book.get_books_name(book_id)
                 if book_name == "未知图书":
                     print("图书不存在")
                     continue
                 if not self.book.is_borrow_books(book_id):
                     print("该图书已被借出！")
                     continue
-                is_book_name = self.book.get_books_name(book_id)
                 self.book.borrow_book(book_id)
                 self.log.add_logs(stu_id,book_id,is_book_name)
+
+                is_book_name = self.book.get_books_name(book_id)
                 is_suc = True
                 if is_suc:
                     print(f"已经成功借阅《{is_book_name}》~")
