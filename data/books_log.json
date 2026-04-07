@@ -1,1 +1,26 @@
-[]
+[
+    {
+        "id": "2024",
+        "book_id": "02",
+        "book_name": "可借",
+        "status": "已归还",
+        "books_time": "2026-04-07 10:51:11",
+        "return_time": "2026-04-07 10:57:17"
+    },
+    {
+        "id": "2024",
+        "book_id": "02",
+        "book_name": "可借",
+        "status": "已借出",
+        "books_time": "2026-04-07 10:55:23",
+        "return_time": ""
+    },
+    {
+        "id": "2024",
+        "book_id": "02",
+        "book_name": "可借",
+        "status": "已借出",
+        "books_time": "2026-04-07 10:56:39",
+        "return_time": ""
+    }
+]

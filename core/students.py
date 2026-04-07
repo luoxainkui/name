@@ -136,7 +136,7 @@ class Students:
         for stu in self.students:
             if stu['id'] == stu_id:
                 return stu['name']
-        return ['未知学生']
+        return '未知学生'
 
     def student_interface(self) ->None:
         while True:

@@ -5,6 +5,7 @@ from core.students import Students
 log = Logs()# 日志
 book = LibrarySystem() #图书类型
 stu = Students() #学生类型
+ADMIN_PASSWORD = "13456"
 class LibraryManager:
     """图书管理系统主程序"""
     def __init__(self):
@@ -24,9 +25,13 @@ class LibraryManager:
                 self.book_manage_menu()
             elif program == '2':
                 self.student_manage_menu()
+            elif program == '3':
+                self.log.show_logs()
             elif program == '0':
                 print("已退出，回到主菜单")
-                break          
+                break 
+            else:
+                print("请勿点其他键")         
     def book_manage_menu(self):
         self.book.run()
     def student_manage_menu(self):
@@ -34,7 +39,7 @@ class LibraryManager:
 
 # ================学生菜单==============
     def students_name(self):
-        stu_id = input("请输入:").strip()
+        stu_id = input("请输入你的学号:").strip()
         if not self.stu.check_student(stu_id):
             print("学生校验失败无法登陆")
             return
@@ -60,10 +65,64 @@ class LibraryManager:
                 if not self.book.is_borrow_books(book_id):
                     print("该图书已被借出！")
                     continue
+                is_book_name = self.book.get_books_name(book_id)
                 self.book.borrow_book(book_id)
-                self.log.add_logs(stu_id,book_id,book_name)
-                print(f"已经成功借阅{book.name}~")
+                self.log.add_logs(stu_id,book_id,is_book_name)
+                is_suc = True
+                if is_suc:
+                    print(f"已经成功借阅《{is_book_name}》~")
             elif stu == '2':
                 book_id = input("请输入需要归还的图书:").strip()
-                
+                book_name = self.book.status_books(book_id)
+                if book_name == "未知图书":
+                    print("图书不存在")
+                    continue
+                is_book_name = self.book.get_books_name(book_id)
+                if self.book.return_books(book_id):
+                    self.log.return_logs(stu_id,book_id,is_book_name)
+                    print(f"成功归还《{is_book_name}》")
+                else:
+                    print("归还失败！")
+            elif stu == '3':
+                self.log.query_logs(stu_id)
+            elif stu == '4':
+                print("已退出本页面")
+                break
+            else:
+                print("请勿点其他键")
+
+
+# ================主菜单==============
+    def run(self) ->None:
+        """分流"""           
+        print("#"*50)
+        print("=======欢迎来到图书管理系统========")
+        print("@"*50)
+        while True:
+            print("\n+++++++++主菜单++++++++")
+            print("………………1.管理员模式…………………")
+            print("******2.学生模式********")
+            print("******3.退出主程序******")
+            run = input("请输入需要进入的程序:")
+            if run == '1':
+                ru = input("请输入密码:")
+                if ru == ADMIN_PASSWORD:
+                    self.administrator_menu()
+                else:
+                    print("验证失败!")
+                    continue
+            elif run == '2':
+                self.students_name()
+            elif run == '3':
+                print("已经退出主程序了")
+                break
+            else:
+                print("错误请重新输入")
+
+if __name__ == "__main__":
+    LM = LibraryManager()
+    LM.run()
+
+
+
 

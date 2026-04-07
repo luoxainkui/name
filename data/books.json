@@ -5,5 +5,13 @@
         "author": "吴承恩",
         "publish_date": "1900",
         "borrow_time": "19"
+    },
+    {
+        "book_id": "02",
+        "book_name": "红楼梦",
+        "author": "曹雪芹",
+        "publish_date": "1900",
+        "borrow_time": "19",
+        "status": "可借"
     }
 ]
